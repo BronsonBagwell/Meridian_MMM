@@ -1,0 +1,42 @@
+{
+  "dataset_rows": 110,
+  "date_range": [
+    "2022-01-03",
+    "2024-02-05"
+  ],
+  "media_channels": [
+    "search",
+    "social",
+    "video",
+    "tv",
+    "affiliate"
+  ],
+  "control_variables": [
+    "seasonality_index",
+    "economic_index",
+    "price_index",
+    "promo_events",
+    "organic_sessions",
+    "holiday_flag"
+  ],
+  "model_build_seconds": 0.36,
+  "prior_seconds": 0.23,
+  "prior_draws": 5,
+  "prior_variables": [
+    "alpha_m",
+    "beta_gm",
+    "beta_m",
+    "ec_m",
+    "eta_m",
+    "gamma_c",
+    "gamma_gc",
+    "knot_values",
+    "mu_t",
+    "roi_m",
+    "sigma",
+    "slope_m",
+    "tau_g",
+    "xi_c"
+  ],
+  "posterior_ran": false
+}

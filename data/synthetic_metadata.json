@@ -1,0 +1,17 @@
+{
+  "record_count": 110,
+  "date_range": [
+    "2022-01-03",
+    "2024-02-05"
+  ],
+  "channels": [
+    "search",
+    "social",
+    "video",
+    "tv",
+    "affiliate"
+  ],
+  "currency": "USD",
+  "target": "conversions",
+  "notes": "Synthetic data emulating Google Meridian MMM input expectations (weekly granularity, spend + controls)."
+}
