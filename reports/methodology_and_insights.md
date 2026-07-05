@@ -23,7 +23,7 @@ Implemented in `src/mmm_pipeline.py`.
 What it does:
 - adstock transformation by channel
 - saturation/response-curve transformation
-- regression-based decomposition into channel contributions
+- regression-based decomposition into channel contributions, with **non-negative media coefficients and an intercept** (a more honest baseline than the earlier unconstrained OLS, and closer to how real MMM priors treat media)
 - ROI summary by channel
 - chart generation and JSON metric export
 
@@ -60,23 +60,25 @@ This is not two half-finished solutions. It is one sensible portfolio architectu
 Together, they answer the useful question: can this person produce a clear MMM-style recommendation flow **and** use a real Bayesian framework without turning the project into sludge?
 
 ## Main business insights from the deterministic run
+The model now fits with **non-negative media coefficients plus an intercept**, which prevents the unconstrained-OLS artifact of media channels "explaining" conversions with implausible negative effects.
+
 1. **Affiliate has the strongest headroom.**
-   - ~30k incremental conversions
-   - ~4.75x modeled ROI
+   - ~24.7k incremental conversions
+   - ~3.88x modeled ROI
    - low weekly base spend makes scaling tests look justified
 
-2. **Search is still worth protecting.**
-   - ~37k incremental conversions
-   - ~1.41x modeled ROI
-   - fits the classic demand-capture pattern: not glamorous, still valuable
+2. **Search contributes, but modestly.**
+   - ~5.1k incremental conversions
+   - ~0.19x modeled ROI
+   - demand capture is present in the fit, just not the dominant driver of this synthetic outcome
 
-3. **Social is positive, but not a star.**
-   - ~0.79x modeled ROI
+3. **Social sits in the same modest band.**
+   - ~0.19x modeled ROI
    - potentially maintainable, but not the first place to look for aggressive growth
 
-4. **TV and Video look bloated in the current mix.**
-   - both show negative modeled contribution in this synthetic setup
-   - that usually points to saturation, weak creative, poor timing, overlap, or simple over-allocation
+4. **TV and Video show no measurable positive incremental effect.**
+   - the constrained fit pins both coefficients at zero (0.00x ROI)
+   - in the earlier unconstrained OLS they appeared as artificial negatives; the honest reading is "no detectable lift in this model," which usually points to saturation, weak creative, poor timing, overlap, or simple over-allocation
 
 5. **Controls matter.**
    - seasonality, promos, and organic activity all explain part of the outcome variation

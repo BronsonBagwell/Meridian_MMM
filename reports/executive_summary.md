@@ -5,30 +5,29 @@
 
 ## Bottom line
 This portfolio piece tells a simple story:
-- the deterministic pipeline fits the synthetic dataset cleanly (**2% MAPE**)
-- **Affiliate** is the clearest scale opportunity (**4.75x modeled ROI**)
-- **Search** remains worth defending (**1.41x ROI**)
-- **TV** and **Video** look over-allocated in the current mix and should be challenged, not protected by habit
+- the deterministic pipeline fits the synthetic dataset cleanly (**~2% MAPE**)
+- **Affiliate** is the clearest scale opportunity (**~3.88x modeled ROI**, roughly 24.7k incremental conversions)
+- **Search** and **Social** contribute, but modestly (**~0.19x ROI** each)
+- **TV** and **Video** show **no measurable incremental lift in this model** — their budgets should be challenged before funding, not protected by habit
 
 That is the kind of output a marketing lead can actually do something with.
 
 ## What a stakeholder should take away
 1. **Scale the obvious winner.** Affiliate is delivering the strongest modeled return on the smallest weekly spend base.
-2. **Protect demand capture.** Search is still productive and should remain part of the core mix.
-3. **Pressure-test upper funnel spend.** TV and Video are not earning blind confidence in this scenario.
+2. **Keep demand capture honest.** Search still contributes, but at a modest modeled return, so it should be monitored rather than blindly defended.
+3. **Pressure-test upper funnel spend.** TV and Video show no measurable incremental lift in this model and are not earning blind confidence in this scenario.
 4. **Use Meridian as the serious next step.** The repo already proves the official package runs on the same dataset, so the path to a fuller Bayesian workflow is real rather than hypothetical.
 
 ## Headline metrics
-- **Model fit:** 2% MAPE
-- **Best ROI:** Affiliate at ~4.75x
-- **Second-best ROI:** Search at ~1.41x
-- **Borderline positive:** Social at ~0.79x
-- **Underperformers:** Video at ~-0.26x, TV at ~-1.51x
+- **Model fit:** ~2% MAPE
+- **Best ROI:** Affiliate at ~3.88x (~24.7k incremental conversions)
+- **Modest contributors:** Search at ~0.19x, Social at ~0.19x
+- **No measurable lift:** Video at 0.00x, TV at 0.00x once media effects are constrained non-negative
 
 ## Recommended actions
 - Increase Affiliate budget in controlled increments and monitor marginal ROI rather than assuming linear scale.
-- Protect Search budget unless new evidence shows intent capture weakening.
-- Reallocate a test tranche of TV/Video spend into higher-intent channels before approving more top-of-funnel budget.
+- Hold Search and Social budgets steady and watch marginal returns, since their modeled ROI is modest rather than compelling.
+- Challenge TV and Video before funding: they show no measurable incremental lift in this model, so reallocate a test tranche into higher-performing channels before approving more top-of-funnel budget.
 - Upgrade the workflow from synthetic demo data to a live weekly feed so the same structure can support real planning.
 
 ## Why this artifact is credible

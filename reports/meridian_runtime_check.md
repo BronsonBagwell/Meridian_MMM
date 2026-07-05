@@ -9,8 +9,8 @@ python src/meridian_smoke_test.py --posterior
 ```
 
 ## Result
-- **Model build:** 0.41s
-- **Prior sample:** 0.24s
+- **Model build:** 0.36s
+- **Prior sample:** 0.23s
 - **Tiny posterior run:** 77.68s on CPU
 - **Dataset size:** 110 weekly observations
 - **Channels modeled:** Search, Social, Video, TV, Affiliate

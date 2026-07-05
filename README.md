@@ -79,8 +79,10 @@ The default experience is intentionally light. The posterior run is optional bec
 - machine-readable metrics in `reports/metrics.json`
 
 Observed result on the bundled dataset:
-- **MAPE:** 0.02
-- **Top ROI channels:** Affiliate, Search, Social
+- **MAPE:** ~0.02
+- **Top ROI channels:** Affiliate (~3.88x), then Search and Social (both modest at ~0.19x)
+
+The pipeline constrains media effects to be non-negative and includes an intercept, mirroring how real MMM tooling (including Meridian's priors) treats media contributions.
 
 ### 2) Official Meridian runtime check
 `src/meridian_smoke_test.py` successfully:
@@ -111,10 +113,10 @@ Because portfolio projects should be honest and pleasant to run.
 That split is intentional, not a compromise. It is the difference between a usable demo and a needlessly fragile science project.
 
 ## Business takeaway from the bundled run
-- **Affiliate** has the clearest scale headroom and the best modeled ROI at **4.75x**.
-- **Search** is still productive and worth protecting at about **1.41x** ROI.
-- **Social** is still positive, but not nearly as compelling as Affiliate or Search.
-- **TV** and **Video** look saturated or mis-specified in the current mix and should be tested or trimmed before more budget is thrown at them.
+- **Affiliate** is still the clear winner, with the best modeled ROI at **~3.88x**.
+- **Search** contributes, but modestly, at about **0.19x** ROI.
+- **Social** is in the same modest band as Search at about **0.19x** ROI.
+- **TV** and **Video** show **no measurable positive incremental effect** once media effects are constrained non-negative (in the earlier unconstrained fit they appeared as artificial negatives). Their budgets should be challenged before more is spent.
 
 ## Limits of this portfolio
 - The dataset is synthetic.

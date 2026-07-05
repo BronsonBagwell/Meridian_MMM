@@ -4,60 +4,61 @@
     "2022-01-03",
     "2024-02-05"
   ],
-  "mape": 0.02,
+  "mape": 0.0211,
   "channel_summary": [
     {
       "channel": "search",
       "spend": 5554692.753053968,
       "avg_weekly_spend": 50497.20684594516,
-      "incremental_conversions": 37354.64360994138,
-      "incremental_revenue": 7844475.158087689,
-      "roi": 1.4122248532602997
+      "incremental_conversions": 5055.027275926392,
+      "incremental_revenue": 1061555.7279445422,
+      "roi": 0.1911097112186627
     },
     {
       "channel": "social",
-      "spend": 2996046.616427835,
-      "avg_weekly_spend": 27236.78742207123,
-      "incremental_conversions": 11207.680617325961,
-      "incremental_revenue": 2353612.929638452,
-      "roi": 0.7855728668349786
+      "spend": 2996046.6164278355,
+      "avg_weekly_spend": 27236.787422071233,
+      "incremental_conversions": 2677.7094143539184,
+      "incremental_revenue": 562318.9770143229,
+      "roi": 0.18768699189492977
     },
     {
       "channel": "video",
       "spend": 3497578.35620784,
       "avg_weekly_spend": 31796.166874616727,
-      "incremental_conversions": -4279.248462612713,
-      "incremental_revenue": -898642.1771486698,
-      "roi": -0.2569326790216645
+      "incremental_conversions": 6.402654632050528e-24,
+      "incremental_revenue": 1.3445574727306108e-21,
+      "roi": 3.8442526107932943e-28
     },
     {
       "channel": "tv",
       "spend": 6337206.710103328,
       "avg_weekly_spend": 57610.97009184844,
-      "incremental_conversions": -45638.34965081557,
-      "incremental_revenue": -9584053.42667127,
-      "roi": -1.5123466639318448
+      "incremental_conversions": 7.321618215840305e-27,
+      "incremental_revenue": 1.5375398253264641e-24,
+      "roi": 2.426210625061644e-31
     },
     {
       "channel": "affiliate",
       "spend": 1337697.6195484383,
       "avg_weekly_spend": 12160.887450440348,
-      "incremental_conversions": 30265.190753145143,
-      "incremental_revenue": 6355690.05816048,
-      "roi": 4.751215794422918
+      "incremental_conversions": 24709.419096065776,
+      "incremental_revenue": 5188978.010173813,
+      "roi": 3.8790365881980398
     }
   ],
   "coefficients": {
-    "search_effect": 241.78513016692023,
-    "social_effect": 86.18868420272638,
-    "video_effect": -30.301503059560282,
-    "tv_effect": -299.95293856856875,
-    "affiliate_effect": 315.3850204108824,
-    "seasonality_index": 653.947528634121,
-    "price_index": 121.63265977677374,
-    "promo_events": 45.260460637082005,
-    "economic_index": 12.749326538767903,
-    "organic_sessions": 318.2240279226737,
-    "holiday_flag": -21.03481495927393
+    "search_effect": 32.719638304403915,
+    "social_effect": 20.591972503538468,
+    "video_effect": 4.533741394486199e-26,
+    "tv_effect": 4.812051521848172e-29,
+    "affiliate_effect": 257.48989026754805,
+    "seasonality_index": 757.0254753912704,
+    "price_index": -705.9891451547857,
+    "promo_events": 45.02453511720865,
+    "economic_index": 9.163057180357717,
+    "organic_sessions": 266.8901602167014,
+    "holiday_flag": -1.9572919594857403,
+    "intercept": 260.150106380823
   }
 }

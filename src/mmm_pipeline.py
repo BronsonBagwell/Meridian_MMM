@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
+from scipy.optimize import lsq_linear
 
 DATA_PATH = Path("data/synthetic_meridian_mmm.csv")
 FIG_DIR = Path("reports/figures")
@@ -68,14 +69,17 @@ def build_feature_matrix(df: pd.DataFrame) -> pd.DataFrame:
     controls["price_index"] = controls["price_index"] - controls["price_index"].mean()
     for col in controls.columns:
         features[col] = controls[col].to_numpy()
+    features["intercept"] = np.ones(len(df))
     return pd.DataFrame(features, index=df.index)
 
 
 def solve_regression(features: pd.DataFrame, target: pd.Series) -> np.ndarray:
     X = features.values
     y = target.values
-    coeffs, *_ = np.linalg.lstsq(X, y, rcond=None)
-    return coeffs
+    media_cols = {f"{c}_effect" for c in CHANNELS}
+    lb = np.array([0.0 if col in media_cols else -np.inf for col in features.columns])
+    ub = np.full(X.shape[1], np.inf)
+    return lsq_linear(X, y, bounds=(lb, ub)).x  # media effects constrained >= 0
 
 
 def summarize_channels(coeffs: np.ndarray, features: pd.DataFrame, df: pd.DataFrame) -> pd.DataFrame:
