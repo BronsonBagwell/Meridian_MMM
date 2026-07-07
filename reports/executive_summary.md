@@ -5,7 +5,7 @@
 
 ## Bottom line
 This portfolio piece tells a simple story:
-- the deterministic pipeline fits the synthetic dataset cleanly (**~2% MAPE**)
+- the deterministic pipeline fits the synthetic dataset cleanly (**~2.1% in-sample MAPE, ~2.9% MAPE on a held-out final ~20% of weeks**)
 - **Affiliate** is the clearest scale opportunity (**~3.88x modeled ROI**, roughly 24.7k incremental conversions)
 - **Search** and **Social** contribute, but modestly (**~0.19x ROI** each)
 - **TV** and **Video** show **no measurable incremental lift in this model** — their budgets should be challenged before funding, not protected by habit
@@ -19,7 +19,7 @@ That is the kind of output a marketing lead can actually do something with.
 4. **Use Meridian as the serious next step.** The repo already proves the official package runs on the same dataset, so the path to a fuller Bayesian workflow is real rather than hypothetical.
 
 ## Headline metrics
-- **Model fit:** ~2% MAPE
+- **Model fit:** 2.11% in-sample MAPE; 2.94% MAPE on the final 22 weeks when the model is refit on only the first 88 weeks (time-based holdout)
 - **Best ROI:** Affiliate at ~3.88x (~24.7k incremental conversions)
 - **Modest contributors:** Search at ~0.19x, Social at ~0.19x
 - **No measurable lift:** Video at 0.00x, TV at 0.00x once media effects are constrained non-negative

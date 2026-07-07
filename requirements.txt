@@ -1,2 +1,3 @@
 google-meridian==1.5.3
 seaborn==0.13.2
+matplotlib<3.11  # arviz (pulled in by meridian) fails to import against matplotlib 3.11's style-module changes

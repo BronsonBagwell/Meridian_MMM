@@ -82,6 +82,27 @@ def solve_regression(features: pd.DataFrame, target: pd.Series) -> np.ndarray:
     return lsq_linear(X, y, bounds=(lb, ub)).x  # media effects constrained >= 0
 
 
+def holdout_validation(features: pd.DataFrame, target: pd.Series, train_fraction: float = 0.8) -> dict[str, object]:
+    """Time-based out-of-sample check: refit the same bounded solve on the first
+    ~80% of weeks (row order = time) and score MAPE on the remaining ~20%.
+
+    The feature matrix is built once on the full frame; that is safe because the
+    adstock transform only carries history forward, and the control rescalings
+    (max-scaling, mean-centering) are applied identically to train and test rows,
+    so they are absorbed by the unbounded control coefficients and intercept.
+    """
+    split = int(round(len(target) * train_fraction))
+    train_coeffs = solve_regression(features.iloc[:split], target.iloc[:split])
+    test_pred = features.iloc[split:].values @ train_coeffs
+    test_actual = target.iloc[split:].values
+    holdout_mape = float(np.mean(np.abs(test_actual - test_pred) / test_actual))
+    return {
+        "holdout_mape": round(holdout_mape, 4),
+        "holdout_train_weeks": int(split),
+        "holdout_test_weeks": int(len(target) - split),
+    }
+
+
 def summarize_channels(coeffs: np.ndarray, features: pd.DataFrame, df: pd.DataFrame) -> pd.DataFrame:
     contribution_matrix = features.mul(coeffs, axis=1)
     summary_rows = []
@@ -165,12 +186,19 @@ def plot_response_curves(channel_df: pd.DataFrame, coeffs: np.ndarray, features:
     plt.close(fig)
 
 
-def export_metrics(df: pd.DataFrame, channel_df: pd.DataFrame, coeffs: np.ndarray, features: pd.DataFrame) -> dict[str, object]:
+def export_metrics(
+    df: pd.DataFrame,
+    channel_df: pd.DataFrame,
+    coeffs: np.ndarray,
+    features: pd.DataFrame,
+    holdout: dict[str, object],
+) -> dict[str, object]:
     mape = float((np.abs(df["conversions"] - df["predicted_conversions"]) / df["conversions"]).mean())
     payload: dict[str, object] = {
         "records": int(len(df)),
         "date_range": [df["week_start"].min().strftime("%Y-%m-%d"), df["week_start"].max().strftime("%Y-%m-%d")],
         "mape": round(mape, 4),
+        **holdout,
         "channel_summary": channel_df.to_dict(orient="records"),
         "coefficients": {col: coeff for col, coeff in zip(features.columns, coeffs)},
     }
@@ -187,18 +215,23 @@ def run_pipeline(data_path: Path = DATA_PATH) -> tuple[pd.DataFrame, pd.DataFram
     coeffs = solve_regression(features, df["conversions"])
     df["predicted_conversions"] = features.values @ coeffs
     channel_df = summarize_channels(coeffs, features, df)
+    holdout = holdout_validation(features, df["conversions"])
 
     plot_actual_vs_pred(df)
     plot_channel_contributions(channel_df)
     plot_response_curves(channel_df, coeffs, features)
-    metrics = export_metrics(df, channel_df, coeffs, features)
+    metrics = export_metrics(df, channel_df, coeffs, features, holdout)
     return df, channel_df, metrics
 
 
 def main() -> None:
     df, channel_df, metrics = run_pipeline()
     print("Pipeline complete.")
-    print(f"MAPE: {metrics['mape']}")
+    print(f"MAPE (in-sample, full fit): {metrics['mape']}")
+    print(
+        f"Holdout MAPE (fit on first {metrics['holdout_train_weeks']} weeks, "
+        f"scored on last {metrics['holdout_test_weeks']}): {metrics['holdout_mape']}"
+    )
     print("Top ROI channels:")
     for row in channel_df.sort_values("roi", ascending=False).head(3).itertuples():
         print(f"  - {row.channel}: ROI {row.roi:.2f}x on ${row.avg_weekly_spend:,.0f} avg weekly spend")

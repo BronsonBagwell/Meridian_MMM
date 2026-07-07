@@ -5,6 +5,9 @@
     "2024-02-05"
   ],
   "mape": 0.0211,
+  "holdout_mape": 0.0294,
+  "holdout_train_weeks": 88,
+  "holdout_test_weeks": 22,
   "channel_summary": [
     {
       "channel": "search",

@@ -37,7 +37,8 @@ This repo is built to answer **yes** to all three.
 │   ├── meridian_blockers.md            # precise runtime constraints and caveats
 │   ├── meridian_runtime_check.md       # official Meridian proof-of-run summary
 │   ├── meridian_runtime_check.json     # runtime details from smoke test
-│   ├── metrics.json                    # deterministic pipeline metrics and channel ROI
+│   ├── meridian_vs_deterministic.md    # Meridian posterior ROI vs deterministic ROI comparison
+│   ├── metrics.json                    # deterministic pipeline metrics, holdout MAPE, channel ROI
 │   └── figures/
 │       ├── channel_incremental_conversions.png
 │       ├── conversions_actual_vs_predicted.png
@@ -79,7 +80,8 @@ The default experience is intentionally light. The posterior run is optional bec
 - machine-readable metrics in `reports/metrics.json`
 
 Observed result on the bundled dataset:
-- **MAPE:** ~0.02
+- **MAPE (in-sample, full fit):** 0.0211
+- **Holdout MAPE (time-based out-of-sample):** 0.0294 — the same bounded solve refit on the first 88 weeks and scored on the final 22 weeks. Slightly worse than in-sample, which is expected and a sign the fit is not purely memorizing the estimation window.
 - **Top ROI channels:** Affiliate (~3.88x), then Search and Social (both modest at ~0.19x)
 
 The pipeline constrains media effects to be non-negative and includes an intercept, mirroring how real MMM tooling (including Meridian's priors) treats media contributions.
@@ -90,9 +92,9 @@ The pipeline constrains media effects to be non-negative and includes an interce
 - instantiates a `Meridian` model
 - samples from the prior
 
-Observed lightweight result from the notebook/default run:
-- **Model build:** 0.36s
-- **Prior sample:** 0.23s
+Observed lightweight result from the latest notebook/default run:
+- **Model build:** 0.13s
+- **Prior sample:** 0.06s
 - **Posterior run:** skipped by default
 
 ### 3) Optional tiny posterior proof
@@ -120,14 +122,14 @@ That split is intentional, not a compromise. It is the difference between a usab
 
 ## Limits of this portfolio
 - The dataset is synthetic.
-- The included Meridian posterior is intentionally tiny and meant as a runtime proof, not final production inference.
+- The bundled Meridian smoke-test posterior is intentionally tiny; a modest 2-chain posterior (200 adapt / 200 burn-in / 200 kept) backs the ROI comparison in `reports/meridian_vs_deterministic.md`, but neither is production-grade inference.
 - The data is national, not geo-level, so it does not showcase Meridian's richer hierarchical strengths.
 
 ## If this became a real case study
 The next upgrade path is straightforward:
 1. swap the synthetic CSV for real weekly geo-level data
 2. tune priors and posterior settings properly in Meridian
-3. compare Meridian posterior outputs with the fast deterministic baseline
+3. compare Meridian posterior outputs with the fast deterministic baseline (a first directional comparison already lives in `reports/meridian_vs_deterministic.md`)
 4. wrap the outputs in a lightweight decision-maker dashboard
 
 ## Best way to review this repo
@@ -136,5 +138,6 @@ If you are skimming, do this in order:
 2. read `reports/executive_summary.md`
 3. inspect `reports/metrics.json`
 4. check `reports/meridian_runtime_check.md`
+5. see how the two tracks line up in `reports/meridian_vs_deterministic.md`
 
 That gives you the business story, the technical proof, and the limitations without making you excavate the repo like an archaeologist.

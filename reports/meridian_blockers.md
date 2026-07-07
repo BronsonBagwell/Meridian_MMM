@@ -19,9 +19,10 @@ These are real constraints worth documenting for reviewers:
    - TensorFlow reports that CUDA is unavailable, so Meridian runs on CPU.
    - Fine for small demos, slower for richer posterior analysis.
 
-2. **Tiny posterior only in this portfolio**
-   - The included Meridian run is intentionally lightweight (`1` chain, `10` adapt, `10` burn-in, `10` kept samples).
-   - Good enough to prove viability, not enough for production-grade posterior diagnostics.
+2. **Small posteriors only in this portfolio**
+   - The default smoke-test run is intentionally lightweight (`1` chain, `10` adapt, `10` burn-in, `10` kept samples).
+   - A fuller comparison run (`2` chains, `200` adapt, `200` burn-in, `200` kept) also completed on this machine in about 42 seconds; its ROI results are in `reports/meridian_vs_deterministic.md`.
+   - Both are good enough to prove viability, not enough for production-grade posterior diagnostics.
 
 3. **National synthetic dataset**
    - This portfolio uses a single-market national dataset.

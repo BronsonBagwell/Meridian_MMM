@@ -24,8 +24,9 @@ What it does:
 - adstock transformation by channel
 - saturation/response-curve transformation
 - regression-based decomposition into channel contributions, with **non-negative media coefficients and an intercept** (a more honest baseline than the earlier unconstrained OLS, and closer to how real MMM priors treat media)
+- **time-based holdout validation**: the same bounded solve is refit on the first ~80% of weeks (88 of 110) and scored on the final ~20% (22 weeks). On the bundled dataset this gives an **in-sample MAPE of 0.0211** and a **holdout MAPE of 0.0294** — modest degradation, which is the honest and expected outcome for an out-of-sample check
 - ROI summary by channel
-- chart generation and JSON metric export
+- chart generation and JSON metric export (`reports/metrics.json` includes both `mape` and `holdout_mape`)
 
 Why it exists:
 - it runs in seconds
@@ -45,11 +46,14 @@ What it does:
 - optionally runs a tiny posterior on CPU
 
 Observed runtime in this repo:
-- model build: **0.36s**
-- prior sample: **0.23s**
-- tiny posterior: **77.68s** when explicitly enabled
+- model build: **0.13s** (latest walkthrough execution)
+- prior sample: **0.06s** (latest walkthrough execution)
+- tiny posterior: **77.68s** when explicitly enabled on the original check machine; the fuller 2-chain comparison posterior (200/200/200) completed in **~42s** on the current machine
 
 See `reports/meridian_runtime_check.md` and `reports/meridian_runtime_check.json`.
+
+### The two tracks are now compared numerically
+The earlier gap — two tracks running on the same data without a numeric comparison — has been closed. A fuller (but still modest) Meridian posterior (**2 chains, 200 adaptation / 200 burn-in / 200 kept draws, CPU**) was run and its per-channel posterior ROI (mean plus 90% credible interval) is compared against the deterministic ROI in **`reports/meridian_vs_deterministic.md`**. Short version: both tracks agree that Affiliate is the clear winner (3.88x deterministic vs. 3.65x posterior mean); they diverge on the channels the deterministic fit pins at zero, where Meridian's informative priors keep ROI positive. It is a directional comparison on national synthetic data, and the report says so plainly.
 
 ## Why the split is intentional
 This is not two half-finished solutions. It is one sensible portfolio architecture.
@@ -106,7 +110,7 @@ This repo avoids that by being explicit about tradeoffs:
 If this moved from portfolio artifact to real case work, the upgrade path is straightforward:
 1. replace the synthetic CSV with real weekly geo-level data
 2. define stronger priors and posterior settings in Meridian
-3. validate Meridian outputs against the fast deterministic baseline
+3. validate Meridian outputs against the fast deterministic baseline (a first directional pass of this now exists in `reports/meridian_vs_deterministic.md`)
 4. add diagnostics, scenario planning, and budget-allocation outputs for decision-makers
 5. package the results in a lightweight dashboard or recurring reporting workflow
 
